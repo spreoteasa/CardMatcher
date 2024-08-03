@@ -9,7 +9,10 @@ import SwiftUI
 
 struct MenuView: View {
     @StateObject var viewModel = MenuViewModel()
+    
+    
     let onGameSelect: (Game) -> Void
+    let onLeaderboard: () -> Void
     
     var buttonWidth: CGFloat {
         UIScreen.main.bounds.width * 0.75
@@ -25,6 +28,19 @@ struct MenuView: View {
             }
         }
         .background(.mint)
+        .overlay(alignment: .bottom) {
+            Button {
+                onLeaderboard()
+            } label: {
+                Text("Leaderboard")
+                    .font(.largeTitle)
+                    .foregroundStyle(.black)
+                    .frame(maxWidth: buttonWidth)
+                    .padding(16)
+                    .background(.regularMaterial, in: .capsule)
+                    
+            }
+        }
     }
     
     func gameRow(for game: Game) -> some View {
@@ -35,7 +51,7 @@ struct MenuView: View {
                 Text(game.title)
                 Text(game.symbols.joined(separator: ","))
             }
-            .frame(maxWidth: buttonWidth)
+            .frame(maxWidth: buttonWidth, alignment: .leading)
             
             .padding(16)
             .background(.regularMaterial, in: .rect(cornerRadii: .init(bottomTrailing: 24, topTrailing: 24)))
@@ -45,5 +61,5 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView() {_ in}
+    MenuView() {_ in} onLeaderboard: {}
 }

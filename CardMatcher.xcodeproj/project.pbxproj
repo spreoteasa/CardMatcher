@@ -29,6 +29,9 @@
 		F9FE65102C5DA9010039ED5A /* MainCoordinatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE650F2C5DA9010039ED5A /* MainCoordinatorViewModel.swift */; };
 		F9FE652C2C5EB5EB0039ED5A /* libPISAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9FE652B2C5EB5EB0039ED5A /* libPISAPI.a */; };
 		F9FE652E2C5EB7500039ED5A /* FetchGameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE652D2C5EB7500039ED5A /* FetchGameRequest.swift */; };
+		F9FE65312C5EC39A0039ED5A /* Score.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F9FE652F2C5EC39A0039ED5A /* Score.xcdatamodeld */; };
+		F9FE65342C5EC4090039ED5A /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE65332C5EC4090039ED5A /* PersistenceController.swift */; };
+		F9FE65382C5ED22F0039ED5A /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE65372C5ED22F0039ED5A /* LeaderboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +77,9 @@
 		F9FE650F2C5DA9010039ED5A /* MainCoordinatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinatorViewModel.swift; sourceTree = "<group>"; };
 		F9FE652B2C5EB5EB0039ED5A /* libPISAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPISAPI.a; path = "Static Library/libPISAPI.a"; sourceTree = "<group>"; };
 		F9FE652D2C5EB7500039ED5A /* FetchGameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchGameRequest.swift; sourceTree = "<group>"; };
+		F9FE65302C5EC39A0039ED5A /* Score.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Score.xcdatamodel; sourceTree = "<group>"; };
+		F9FE65332C5EC4090039ED5A /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		F9FE65372C5ED22F0039ED5A /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +132,7 @@
 		F9F0C7342C5A8AD30058B76E /* CardMatcher */ = {
 			isa = PBXGroup;
 			children = (
+				F9FE65322C5EC3F90039ED5A /* CoreData */,
 				F9FE650C2C5DA89F0039ED5A /* Utils */,
 				F9FE65042C5DA6AD0039ED5A /* Coordinator */,
 				F9F0C76F2C5AADC90058B76E /* Features */,
@@ -204,6 +211,7 @@
 		F9F0C76F2C5AADC90058B76E /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				F9FE65362C5ED2210039ED5A /* LeaderboardView */,
 				F9F0C7732C5AAF5E0058B76E /* MenuView */,
 				F9F0C7702C5AADCF0058B76E /* GameView */,
 			);
@@ -259,6 +267,23 @@
 				F9FE652B2C5EB5EB0039ED5A /* libPISAPI.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F9FE65322C5EC3F90039ED5A /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE652F2C5EC39A0039ED5A /* Score.xcdatamodeld */,
+				F9FE65332C5EC4090039ED5A /* PersistenceController.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		F9FE65362C5ED2210039ED5A /* LeaderboardView */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE65372C5ED22F0039ED5A /* LeaderboardView.swift */,
+			);
+			path = LeaderboardView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,6 +416,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9FE65312C5EC39A0039ED5A /* Score.xcdatamodeld in Sources */,
 				F9F0C7692C5AAB4E0058B76E /* CardColor.swift in Sources */,
 				F9F0C76B2C5AAB7A0058B76E /* Game.swift in Sources */,
 				F9F0C7382C5A8AD30058B76E /* ContentView.swift in Sources */,
@@ -399,11 +425,13 @@
 				F9F0C7632C5A91550058B76E /* CardView.swift in Sources */,
 				F9F0C7772C5AAF760058B76E /* MenuView.swift in Sources */,
 				F9FE65092C5DA7280039ED5A /* CoordinatorView.swift in Sources */,
+				F9FE65342C5EC4090039ED5A /* PersistenceController.swift in Sources */,
 				F9F0C7722C5AADD90058B76E /* GameViewModel.swift in Sources */,
 				F9FE65102C5DA9010039ED5A /* MainCoordinatorViewModel.swift in Sources */,
 				F9F0C7662C5AAAC70058B76E /* APIService.swift in Sources */,
 				F9F0C7362C5A8AD30058B76E /* CardMatcherApp.swift in Sources */,
 				F9FE650B2C5DA81C0039ED5A /* GameView.swift in Sources */,
+				F9FE65382C5ED22F0039ED5A /* LeaderboardView.swift in Sources */,
 				F9FE650E2C5DA8AA0039ED5A /* NavigationPathContainer.swift in Sources */,
 				F9FE652E2C5EB7500039ED5A /* FetchGameRequest.swift in Sources */,
 				F9F0C76E2C5AAC480058B76E /* APIError.swift in Sources */,
@@ -742,6 +770,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F9FE652F2C5EC39A0039ED5A /* Score.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F9FE65302C5EC39A0039ED5A /* Score.xcdatamodel */,
+			);
+			currentVersion = F9FE65302C5EC39A0039ED5A /* Score.xcdatamodel */;
+			path = Score.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F9F0C72A2C5A8AD30058B76E /* Project object */;
 }

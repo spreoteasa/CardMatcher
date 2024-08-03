@@ -9,7 +9,8 @@ import SwiftUI
 
 struct MainCoordinatorView: CoordinatorView {
     @StateObject var viewModel = MainCoordinatorViewModel()
-    
+    @Environment(\.managedObjectContext) var managedObjectContext
+
     var body: some View {
         navigationContent
     }
@@ -31,10 +32,16 @@ extension MainCoordinatorView {
         switch state {
         case .game(let game):
             GameView(viewModel: GameViewModel(game: game))
+                .environment(\.managedObjectContext, managedObjectContext)
         case .menu:
             MenuView() { selectedGame in
                 viewModel.showScreen(.game(selectedGame))
+            } onLeaderboard: {
+                viewModel.showScreen(.leaderboard)
             }
+        case .leaderboard:
+            LeaderboardView()
+                .environment(\.managedObjectContext, managedObjectContext)
         }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor
 class GameViewModel: ObservableObject {
@@ -13,13 +14,28 @@ class GameViewModel: ObservableObject {
     @Published var selectedCards: (CardElement?, CardElement?)
     @Published var solvedSymbols: [String] = []
     @Published var isGameOn = false
+    @Published var score = 0
+    @Published var time = 0
     
+    @Published var didWin = false
+    private var cancellables = Set<AnyCancellable>()
     let game: Game
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
+    var initialTime: Int {
+        game.symbols.count * 5
+    }
+    
     init(game: Game) {
         self.game = game
+        configureSubscribers()
         initializeGame()
+    }
+    
+    private func configureSubscribers() {
+        $solvedSymbols.sink { [weak self] newValue in
+            self?.didWin = newValue.sorted() == self?.game.symbols.sorted()
+        }.store(in: &cancellables)
     }
     
     private func initializeGame() {
@@ -28,7 +44,6 @@ class GameViewModel: ObservableObject {
             .shuffled()
             .enumerated()
             .compactMap({CardElement(symbol: $0.element, position: $0.offset, isSelected: true)})
-        
     }
 }
 
@@ -44,13 +59,16 @@ extension GameViewModel {
     
     private func startGame() {
         board = board.compactMap{CardElement(symbol: $0.symbol, position: $0.position, isSelected: false)}
+        self.time = game.symbols.count * 5
         isGameOn = true
     }
     
     private func resetGame() {
         isGameOn = false
+        self.time = 0
         selectedCards = (nil, nil)
         solvedSymbols = []
+        score = 0
         initializeGame()
     }
 }
@@ -94,6 +112,7 @@ extension GameViewModel {
             guard let self else { return }
             if lhsCard.symbol == rhsCard.symbol {
                 self.solvedSymbols.append(lhsCard.symbol)
+                self.score += 1
             } else {
                 self.deselectCard(at: cardIndex)
                 if let leftIndex = board.firstIndex(where: { $0.hashValue == lhsCard.hashValue }) {

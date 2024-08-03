@@ -21,6 +21,7 @@ extension MainCoordinatorViewModel {
     enum ScreenType: Hashable {
         case game(Game)
         case menu
+        case leaderboard
     }
     
     func showScreen(_ screen: ScreenType) {

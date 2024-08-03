@@ -10,10 +10,7 @@ import SwiftUI
 @MainActor
 struct GameView: View {
     @StateObject var viewModel: GameViewModel
-    
-//    var dynamicSize: CGFloat {
-//        UIDevice.current.userInterfaceIdiom == .pad ? 240 : 140
-//    }
+    @Environment(\.managedObjectContext) var managedObjectContext
     
     var isIpad: Bool {
         UIDevice.current.userInterfaceIdiom == .pad
@@ -33,8 +30,11 @@ struct GameView: View {
             VStack(alignment: .leading, spacing: 0) {
                 topSection
                     .padding(.bottom, 32)
-                
-                gameBoard(proxy: proxy)
+                if viewModel.didWin {
+                    Text("You win!")
+                } else {
+                    gameBoard(proxy: proxy)
+                }
                 }
             }
             .padding(.horizontal, 16)
@@ -42,6 +42,24 @@ struct GameView: View {
                 buttonSection
             }
             .background(.mint)
+        }
+        .onReceive(viewModel.timer) { time in
+            if viewModel.time > 0 {
+                viewModel.time -= 1
+            }
+        }
+        .onChange(of: viewModel.didWin) { newValue in
+            if newValue {
+                let score = Score(context: managedObjectContext)
+                score.points = Int64(viewModel.score)
+                score.time = Int64(viewModel.initialTime - viewModel.time)
+                
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(error)
+                }
+            }
         }
     }
 }
@@ -54,9 +72,10 @@ extension GameView {
                 .font(.title)
                 .fontWeight(.bold)
                 .padding([.top, .leading], 16)
-            Text("Score: 0")
+            Text("Score: \(viewModel.score)")
                 .font(.headline)
                 .frame(maxWidth: .infinity)
+            Text("Time: \(viewModel.time)")
         }
     }
     
