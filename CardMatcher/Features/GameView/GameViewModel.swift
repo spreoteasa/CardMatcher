@@ -16,6 +16,7 @@ class GameViewModel: ObservableObject {
     @Published var isGameOn = false
     @Published var score = 0
     @Published var time = 0
+    @Published var moves = 0
     
     @Published var didWin = false
     private var cancellables = Set<AnyCancellable>()
@@ -34,7 +35,17 @@ class GameViewModel: ObservableObject {
     
     private func configureSubscribers() {
         $solvedSymbols.sink { [weak self] newValue in
-            self?.didWin = newValue.sorted() == self?.game.symbols.sorted()
+            guard let self else { return }
+            self.didWin = newValue.sorted() == self.game.symbols.sorted()
+            if self.didWin == true {
+                self.score += (self.initialTime - self.time)
+                
+                if self.moves == self.board.count {
+                    self.score += self.board.count / 2
+                } else if self.moves > self.board.count && self.moves < self.board.count + 4 {
+                    self.score += self.board.count / 4
+                }
+            }
         }.store(in: &cancellables)
     }
     
@@ -78,7 +89,7 @@ extension GameViewModel {
     //MARK: - main logic selection method
     func toggleCardSelection(_ card: CardElement) {
         guard let cardIndex = board.firstIndex(of: card), isGameOn else { return }
-        
+        moves += 1
         board[cardIndex].isSelected.toggle()
         
         if handleSelectedCard(card: card) {

@@ -10,7 +10,7 @@ import SwiftUI
 struct LeaderboardView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(
-        sortDescriptors: [SortDescriptor(\.points)]
+        sortDescriptors: [SortDescriptor(\.points, order: .reverse)]
     ) var scores: FetchedResults<Score>
     var body: some View {
         VStack {
@@ -28,7 +28,7 @@ struct LeaderboardView: View {
                                 .frame(width: 32, height: 32)
                                 .foregroundStyle(.black)
                                 .brightness(1)
-                            Text("Points achieved ->\(score.points)")
+                            Text("Points achieved -> \(score.points)")
                             Text("in \(score.time) seconds")
                         }
                         .padding()
