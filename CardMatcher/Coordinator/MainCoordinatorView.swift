@@ -30,7 +30,7 @@ extension MainCoordinatorView {
     func getScreen(_ state: MainCoordinatorViewModel.ScreenType) -> some View {
         switch state {
         case .game(let game):
-            GameView(game: game)
+            GameView(viewModel: GameViewModel(game: game))
         case .menu:
             MenuView() { selectedGame in
                 viewModel.showScreen(.game(selectedGame))
