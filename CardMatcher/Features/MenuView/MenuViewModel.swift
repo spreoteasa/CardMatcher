@@ -23,10 +23,7 @@ class MenuViewModel: ObservableObject {
         Task { [weak self] in
             guard let self else { return }
             do {
-                try await self.apiService.fetchGames { games in
-                    self.games = games
-                    print(games)
-                }
+                self.games = try await self.apiService.fetchGames()
             } catch {
                 print(error)
             }

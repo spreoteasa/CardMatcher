@@ -8,43 +8,37 @@
 import SwiftUI
 
 struct CardView: View {
+    @Binding var isSelected: Bool
+    let symbol: String
+    
     var body: some View {
-        GeometryReader { proxy in
-            Color.green
-                .clipShape(.rect(cornerRadius: 24))
-                .frame(width: proxy.size.width / 3)
-                .frame(height: proxy.size.height / 4)
+        Button {
+            isSelected.toggle()
+        } label: {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .foregroundStyle(isSelected ? .green : .red)
+                .shadow(radius: 6)
+                .overlay {
+                    if isSelected {
+                        Text(symbol)
+                    } else {
+                        Image(systemName: "moonphase.waxing.crescent")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .foregroundStyle(.white)
+                    }
+                    
+                }
+                .rotation3DEffect(.degrees(isSelected ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+                .animation(.default.speed(0.5), value: isSelected)
         }
+        
     }
 }
 
 #Preview {
-    ScrollView {
-        VStack {
-//            ForEach(1..<10) { _ in
-                HStack {
-//                    GridRow {
-                        CardView()
-                        CardView()
-                        CardView()
-//                    }
-                }
-            HStack {
-//                    GridRow {
-                    CardView()
-                    CardView()
-                    CardView()
-//                    }
-            }
-            HStack {
-//                    GridRow {
-                    CardView()
-                    CardView()
-                    CardView()
-//                    }
-            }
-//            }
-        }
-        .frame(maxHeight: .infinity)
-    }
+    CardView(
+        isSelected: .constant(false),
+        symbol: "🥸"
+    )
 }
