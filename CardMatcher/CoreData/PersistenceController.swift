@@ -19,11 +19,13 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let controller = PersistenceController(inMemory: true)
 
-        // Create 10 example programming languages.
+        // Create 10 example scores.
         for index in 0..<10 {
-            let language = Score(context: controller.container.viewContext)
-            language.points = Int64(index * 2)
-            language.time = Int64(index)
+            let score = Score(context: controller.container.viewContext)
+            score.points = Int64(index * 2)
+            score.time = Int64(index)
+            score.game = "Halloween"
+            score.symbol = "😗"
         }
 
         return controller

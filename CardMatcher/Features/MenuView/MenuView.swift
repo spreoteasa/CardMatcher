@@ -10,15 +10,22 @@ import SwiftUI
 struct MenuView: View {
     @StateObject var viewModel = MenuViewModel()
     
-    
     let onGameSelect: (Game) -> Void
     let onLeaderboard: () -> Void
     
-    var buttonWidth: CGFloat {
-        UIScreen.main.bounds.width * 0.75
-    }
-    
     var body: some View {
+        mainView
+            .padding(.top,24)
+            .background(.mint)
+            .overlay(alignment: .bottom) {
+                buttonSection
+            }
+    }
+}
+
+//MARK: - View Components
+extension MenuView {
+    var mainView: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 ForEach(viewModel.games) { game in
@@ -27,19 +34,19 @@ struct MenuView: View {
                 }
             }
         }
-        .background(.mint)
-        .overlay(alignment: .bottom) {
-            Button {
-                onLeaderboard()
-            } label: {
-                Text("Leaderboard")
-                    .font(.largeTitle)
-                    .foregroundStyle(.black)
-                    .frame(maxWidth: buttonWidth)
-                    .padding(16)
-                    .background(.regularMaterial, in: .capsule)
-                    
-            }
+    }
+    
+    var buttonSection: some View {
+        Button {
+            onLeaderboard()
+        } label: {
+            Text("Leaderboard")
+                .font(.largeTitle)
+                .foregroundStyle(.black)
+                .frame(maxWidth: buttonWidth)
+                .padding(16)
+                .background(.regularMaterial, in: .capsule)
+                
         }
     }
     
@@ -57,6 +64,13 @@ struct MenuView: View {
             .background(.regularMaterial, in: .rect(cornerRadii: .init(bottomTrailing: 24, topTrailing: 24)))
             
         }
+    }
+}
+
+//MARK: - Utils
+extension MenuView {
+    var buttonWidth: CGFloat {
+        UIScreen.main.bounds.width * 0.75
     }
 }
 
