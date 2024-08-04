@@ -58,6 +58,7 @@ class GameViewModel: ObservableObject {
             guard let self else { return }
             self.gameControls.didWin = newValue.sorted() == self.game.symbols.sorted()
             if self.gameControls.didWin == true {
+                self.timer.upstream.connect().cancel()
                 self.gameControls.score += (self.initialTime - self.gameControls.time)
                 
                 if self.gameControls.moves == self.gameControls.board.count {

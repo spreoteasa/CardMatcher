@@ -47,8 +47,14 @@ extension GameView {
     func mainSection(proxy: GeometryProxy) -> some View {
         if viewModel.gameControls.didWin {
             Text("You win!")
+                .font(.title)
+                .foregroundStyle(.black)
+                .frame(maxWidth: .infinity, alignment: .center)
         } else if viewModel.didLose {
             Text("Time out! You lost")
+                .font(.title)
+                .foregroundStyle(.black)
+                .frame(maxWidth: .infinity, alignment: .center)
         } else {
             gameBoard(proxy: proxy)
         }
